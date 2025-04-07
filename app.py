@@ -8,22 +8,21 @@ import plotly.figure_factory as ff
 import preprocessor, helper
 import os
 
-# --- Load Data from Local ZIP File ---
-def load_data_from_repo(zip_path):
-    if zip_path.endswith('.zip'):
-        with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-            file_list = zip_ref.namelist()
-            st.write("Files inside zip:", file_list)  # Optional debug
-            with zip_ref.open(file_list[0]) as csvfile:
-                df = pd.read_csv(csvfile)
+# --- Load Data from Local GZ File ---
+def load_data_from_repo(gz_path):
+    if gz_path.endswith('.gz'):
+        df = pd.read_csv(gz_path, compression='gzip')
     else:
-        raise ValueError("Unsupported file type. Expected a .zip file.")
+        raise ValueError("Unsupported file type. Expected a .gz file.")
     return df
 
 # --- Data Loading ---
-# Local path of the ZIP file
-ZIP_FILE_PATH = 'athlete_events.zip'  # Ensure this is in your repo
-df = load_data_from_repo(ZIP_FILE_PATH)
+# Local path of the GZ file
+GZ_FILE_PATH = 'athlete_events.gz'  # Make sure this is the exact name and path
+df = load_data_from_repo(GZ_FILE_PATH)
+
+region_df = pd.read_csv('noc_regions.csv')  # This remains unchanged
+
 region_df = pd.read_csv('noc_regions.csv')
 
 # --- Preprocessing ---
