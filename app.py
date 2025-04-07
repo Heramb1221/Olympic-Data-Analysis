@@ -5,10 +5,16 @@ import plotly.express as px
 import matplotlib.pyplot as plt
 import seaborn as sns
 import plotly.figure_factory as ff
+import requests
+from io import StringIO
 
-url = "https://drive.google.com/file/d/1wzaKrDChleotFoA94v__DTfRDSbA4bnB/view?usp=sharing"
-df = pd.read_csv(url)
-region_df = pd.read_csv('noc_regions.csv')
+file_id = '1wzaKrDChleotFoA94v__DTfRDSbA4bnB'
+download_url = f'https://drive.google.com/uc?id={file_id}'
+
+response = requests.get(download_url)
+data = StringIO(response.text)
+df = pd.read_csv(data)
+
 
 df = preprocessor.preprocess(df, region_df)
 
