@@ -8,12 +8,8 @@ import plotly.figure_factory as ff
 import requests
 from io import StringIO
 
-file_id = '1wzaKrDChleotFoA94v__DTfRDSbA4bnB'
-download_url = f'https://drive.google.com/uc?id={file_id}'
-
-response = requests.get(download_url)
-data = StringIO(response.text)
-df = pd.read_csv(data)
+df = pd.read_csv('athlete_events.csv')
+region_df = pd.read_csv('noc_regions.csv')
 
 
 df = preprocessor.preprocess(df, region_df)
